@@ -17,9 +17,51 @@ class Channel:
         self.__description = self.__channel["items"][0]["snippet"]["description"]
         self.__video_count = self.__channel["items"][0]["statistics"]["videoCount"]
         self.__view_count = self.__channel["items"][0]["statistics"]["viewCount"]
-        self.__subscriber_count = self.__channel["items"][0]["statistics"]["subscriberCount"]
+        self.__subscriber_count = int(self.__channel["items"][0]["statistics"]["subscriberCount"])
         self.__url = f"https://www.youtube.com/channel/{channel_id}"
 
+    def __str__(self):
+        """
+        Метод, возвращает название и ссылку на канал по шаблону <название_канала> (<ссылка_на_канал>)
+        """
+        return f"{self.__title} ({self.__url})"
+
+    def __add__(self, other):
+        """
+        Возвращение сложения двух экземпляров класса по числу подписчиков
+        """
+        return self.__subscriber_count + other.__subscriber_count
+    def __sub__(self, other):
+        """
+        Возвращение вычитания двух экземпляров класса по числу подписчиков
+        """
+        return self.__subscriber_count - other.__subscriber_count
+    def __gt__(self, other):
+        """
+        Возвращение сравнения "больше" двух экземпляров класса по числу подписчиков
+        """
+        return self.__subscriber_count > other.__subscriber_count
+    def __ge__(self, other):
+        """
+        Возвращение сравнения "больше или равно" двух экземпляров класса по числу подписчиков
+        """
+        return self.__subscriber_count >= other.__subscriber_count
+    def __lt__(self, other):
+        """
+        Возвращение сравнения "меньше" двух экземпляров класса по числу подписчиков
+        """
+        return self.__subscriber_count < other.__subscriber_count
+    def __le__(self, other):
+        """
+        Возвращение сравнения "меньше или равно" двух экземпляров класса по числу подписчиков
+        """
+        return self.__subscriber_count <= other.__subscriber_count
+
+    def __eq__(self, other):
+        """
+        Возвращение сравнения "равно" двух экземпляров класса по числу подписчиков
+        """
+        return self.__subscriber_count == other.__subscriber_count
 
     @property
     def title(self):

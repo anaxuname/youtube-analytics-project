@@ -1,10 +1,9 @@
 import json
-import os
 
-from googleapiclient.discovery import build
+from src.youtube import YoutubeAPI
 
 
-class Channel:
+class Channel(YoutubeAPI):
     """Класс для ютуб-канала"""
 
     def __init__(self, channel_id: str) -> None:
@@ -40,21 +39,25 @@ class Channel:
         Возвращение вычитания двух экземпляров класса по числу подписчиков
         """
         return self.__subscriber_count - other.__subscriber_count
+
     def __gt__(self, other):
         """
         Возвращение сравнения "больше" двух экземпляров класса по числу подписчиков
         """
         return self.__subscriber_count > other.__subscriber_count
+
     def __ge__(self, other):
         """
         Возвращение сравнения "больше или равно" двух экземпляров класса по числу подписчиков
         """
         return self.__subscriber_count >= other.__subscriber_count
+
     def __lt__(self, other):
         """
         Возвращение сравнения "меньше" двух экземпляров класса по числу подписчиков
         """
         return self.__subscriber_count < other.__subscriber_count
+
     def __le__(self, other):
         """
         Возвращение сравнения "меньше или равно" двух экземпляров класса по числу подписчиков
@@ -105,11 +108,3 @@ class Channel:
         """
         with open(file_name, 'w') as outfile:
             json.dump(self.__channel, outfile)
-
-    @classmethod
-    def get_service(cls):
-        """
-        Класс-метод, возвращает объект для работы с YouTube API
-        """
-        api_key = os.getenv('API_KEY')
-        return build('youtube', 'v3', developerKey=api_key)

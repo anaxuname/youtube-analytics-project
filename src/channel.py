@@ -30,7 +30,11 @@ class Channel:
         """
         Возвращение сложения двух экземпляров класса по числу подписчиков
         """
-        return self.__subscriber_count + other.__subscriber_count
+        if type(other) == Channel:
+            return self.__subscriber_count + other.__subscriber_count
+        else:
+            raise TypeError
+
     def __sub__(self, other):
         """
         Возвращение вычитания двух экземпляров класса по числу подписчиков

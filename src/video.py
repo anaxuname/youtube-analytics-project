@@ -10,17 +10,24 @@ class Video(YoutubeAPI):
         youtube = self.get_service()
         video_response = youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
                                                id=video_id).execute()
-        self.video_title: str = video_response['items'][0]['snippet']['title']
-        self.view_count: int = video_response['items'][0]['statistics']['viewCount']
-        self.like_count: int = video_response['items'][0]['statistics']['likeCount']
-        self.comment_count: int = video_response['items'][0]['statistics']['commentCount']
-        self.url: str = f'https://youtu.be/{video_id}'
+        try:
+            self.title: str = video_response['items'][0]['snippet']['title']
+            self.view_count: int = video_response['items'][0]['statistics']['viewCount']
+            self.like_count: int = video_response['items'][0]['statistics']['likeCount']
+            self.comment_count: int = video_response['items'][0]['statistics']['commentCount']
+            self.url: str = f'https://youtu.be/{video_id}'
+        except IndexError:
+            self.title = None
+            self.view_count = None
+            self.like_count = None
+            self.comment_count = None
+            self.url = None
 
     def __str__(self):
         """
         Метод, возвращает название и ссылку на канал по шаблону <название_канала> (<ссылка_на_канал>)
         """
-        return self.video_title
+        return self.title
 
 
 class PLVideo(Video):
